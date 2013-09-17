@@ -1,4 +1,4 @@
-<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
+6+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN"
 "http://www.w3.org/TR/html4/loose.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml">
 
@@ -28,7 +28,6 @@
 		var targetUsed = [];
 
 		var lowerRange = 1;
-		var moves = 0;
 		var sideLength = 5;
 		var startingPoints = 1;
 		
@@ -52,7 +51,7 @@
 			var id = "T" + r + c;
 			console.log(id);
 			console.log(targetUsed[id]);
-			if(r > 4 || c > 4 || r < 0 || c < 0 || targetUsed[id] == "y"){
+			if(r > sideLength || c > sideLength || r < 0 || c < 0 || targetUsed[id] == "y"){
 				return;
 			}
 			targetOpen[id] = "y";
@@ -84,7 +83,7 @@
 				if (debug) {
 					console.log("To " + ident + ',' + targetCell);
 				}
-				if (targetOpen[targetCell] == "y" && targetUsed[targetCell] == "n" || moves > (sideLength * sideLength)) {
+				if (targetOpen[targetCell] == "y" && targetUsed[targetCell] == "n") {
 					if (sourceInfo[sourceCell] == targetInfo[targetCell]) {
 						ident.innerHTML = "<font size ='6'><pre>  " + targetInfo[targetCell] + "</pre></font>";
 						targetUsed[targetCell] = "y";
@@ -94,7 +93,7 @@
 						sourceCell = '';
 						targetCell = '';
 					} else {
-						alert("Source does not match target, try again");
+						alert("That's the wrong number, try again");
 						targetCell = '';
 					}
 				}
@@ -144,11 +143,11 @@
 		}
 		
 		function getStartingPoints() {
-			pointInput = document.getElementById("startingPoints").value;
+			var pointInput = document.getElementById("startingPoints").value;
 			if (debug) {
 				console.log('Got ' + pointInput);
 			}
-			if(pointInput = "" || parseInt(pointInput) < 1 || pointInput == false){
+			if(parseInt(pointInput) < 1 || pointInput == false){
 				startingPoints = 1;
 			}
 			else{
@@ -196,7 +195,7 @@
 					if (debug) {
 						console.log(j);
 					}
-					t += '<td id = ' + ident + ' width = "80" height = "80" onclick="selectTarget(' + ident + ')" ></td>';
+					t += '<td id = ' + ident + ' width = "80" height = "80" onclick="selectTarget(' + ident + ')" bgColor = "#CCFFCC" ></td>';
 				}
 				t += '</tr>';
 			}
@@ -221,7 +220,7 @@
 						console.log(j);
 					}
 					var intext = "<font size ='6'><pre>  " + ranProd + "</pre></font>";
-					t += '<td id = ' + ident + ' width = "80" height = "80" onclick="selectSource(' + ident + ')">' + intext + '</td>';
+					t += '<td id = ' + ident + ' width = "80" height = "80" onclick="selectSource(' + ident + ')" bgColor = "#CCFFCC">' + intext + '</td>';
 				}
 				t += '</tr>';
 			}
