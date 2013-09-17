@@ -19,7 +19,7 @@
 	<script>
 		var debug = 0;
 		
-		var sideLength = 9;
+		var sideLength = 5;
 		var startingPoints = 1;
 		
 		// these keep extra state data for each cell, indexed by the widget id string
@@ -124,9 +124,57 @@
 			}
 			return;
 		}
+		
+		function getSideLength() {
+			lengthInput = document.getElementById("sideLength").value;
+			if (debug) {
+				console.log('Got ' + lengthInput);
+			}
+			if (lengthInput == ""){
+				sideLength = 5;
+			} else if (parseInt(lengthInput) > 9) {
+				sideLength = 9;
+			} else if (parseInt(lengthInput) < 5) {
+				sideLength = 5;
+			} else {
+				sideLength = lengthInput;
+			}
+			if (debug) {
+				console.log('sideLength is ' + sideLength);
+			}
+			return;
+		}
+		
+		function getStaringPoints() {
+			pointInput = document.getElementById("startingPoints").value;
+			if (debug) {
+				console.log('Got ' + pointInput);
+			}
+			if(textInput = ""){
+				startingPoints = 1;
+			}
+			else{
+				startingPoints = parseInt(pointInput);
+			}
+			if (debug) {
+				console.log('startingPoints is ' + startingPoints);
+			}
+			return;
+		}
 
 		function makePage() {
-			var t = '<h1>Multiplication Game</h1> <br> <b>Lowest Factor (1 to 8)</b>' + '<input type="text" id="lowerRange">' + '<input type="button" value="Redraw Cells" onClick="redrawBoard()"></button>' + '<input type="button" value="Draw Cards" onClick="drawCards()"></button>';
+			var t = '<h1>Multiplication Game</h1> ' + 
+			' <br> ' +  
+			'<b>Lowest Factor (1 to 8)</b>' +
+			'<input type="text" id="lowerRange">' + 
+			'<input type="button" value="Redraw Cells" onClick="redrawBoard()"></button>' + 
+			'<br> ' +
+			'<b>Side Length of board</b>' +
+			'<input type="text" id="sideLength">' +
+			'<br> ' +
+			'<b>Number of Start Points</b>' +
+			'<input type="text" id="startingPoints">' +
+			'<input type="button" value="Draw Cards" onClick="drawCards()"></button>';
 			t += '<table border="" cellspacing="0" cellpadding="0">';
 			t += '<td width = "80" height = "80" bgColor="#AAAAAA"></td>';
 			for ( j = 0; j < sideLength; j++) {
@@ -163,7 +211,7 @@
 				t += '<tr>';
 				t += '<td width = "80" height = "80" bgColor="#AAAAAA">Source</td>';
 				for ( j = 0; j < sideLength; j++) {
-					var upperProduct = (parseInt(lowerRange) + 4) * (parseInt(lowerRange) + 4);
+					var upperProduct = (parseInt(lowerRange) + (parseInt(sideLength) - 1)) * (parseInt(lowerRange) + (parseInt(sideLength) - 1));
 					var lowerProduct = parseInt(lowerRange) * parseInt(lowerRange);
 					var ranProd = Math.floor(Math.random() * upperProduct + lowerProduct);
 					var ident = 'S' + j + i;
@@ -194,8 +242,16 @@
 		}
 
 		function redrawBoard() {
-			getlowerRange();
-			drawBoard();
+			var r=confirm("Are you sure?");
+			if (r==true){
+				getStaringPoints()
+ 				getSideLength();
+				getlowerRange();
+				drawBoard();
+ 			}
+			else{
+ 			 	return;
+ 			}
 		}
 	</script>
 
