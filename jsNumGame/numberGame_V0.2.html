@@ -19,9 +19,6 @@
 	<script>
 		var debug = 0;
 		
-		var sideLength = 5;
-		var startingPoints = 1;
-		
 		// these keep extra state data for each cell, indexed by the widget id string
 		var targetInfo = [];
 		var targetRow = [];
@@ -32,6 +29,8 @@
 
 		var lowerRange = 1;
 		var moves = 0;
+		var sideLength = 5;
+		var startingPoints = 1;
 		
 		// remember the source and target cells
 		var sourceCell = '';
@@ -78,7 +77,6 @@
 		}
 
 		function selectTarget(ident) {
-			
 			if (sourceCell == '') {
 				alert("Select source cell first");
 			} else {
@@ -86,7 +84,7 @@
 				if (debug) {
 					console.log("To " + ident + ',' + targetCell);
 				}
-				if (targetOpen[targetCell] == "y" && targetUsed[targetCell] == "n") {
+				if (targetOpen[targetCell] == "y" && targetUsed[targetCell] == "n" || moves > (sideLength * sideLength)) {
 					if (sourceInfo[sourceCell] == targetInfo[targetCell]) {
 						ident.innerHTML = targetInfo[targetCell];
 						targetUsed[targetCell] = "y";
@@ -150,11 +148,12 @@
 			if (debug) {
 				console.log('Got ' + pointInput);
 			}
-			if(textInput = "" || parseInt(pointInput) < 1){
+			console.log(pointInput);
+			if(pointInput = "" || parseInt(pointInput) < 1 || pointInput == false){
 				startingPoints = 1;
 			}
 			else{
-				startingPoints = parseInt(pointInput);
+				startingPoints = pointInput;
 			}
 			if (debug) {
 				console.log('startingPoints is ' + startingPoints);
@@ -230,8 +229,8 @@
 		}
 
 		function drawCards() {
-			handOfCards.innerHTML = "";
-			handOfCards.innerHTML = drawSource();
+			document.getElementById("handOfCards").innerHTML = "";
+			document.getElementById("handOfCards").innerHTML = drawSource();
 		}
 
 		function drawBoard() {
