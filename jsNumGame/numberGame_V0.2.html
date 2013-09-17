@@ -145,12 +145,12 @@
 			return;
 		}
 		
-		function getStaringPoints() {
+		function getStartingPoints() {
 			pointInput = document.getElementById("startingPoints").value;
 			if (debug) {
 				console.log('Got ' + pointInput);
 			}
-			if(textInput = ""){
+			if(textInput = "" || parseInt(pointInput) < 1){
 				startingPoints = 1;
 			}
 			else{
@@ -244,7 +244,7 @@
 		function redrawBoard() {
 			var r=confirm("Are you sure?");
 			if (r==true){
-				getStaringPoints()
+				getStartingPoints();
  				getSideLength();
 				getlowerRange();
 				drawBoard();
