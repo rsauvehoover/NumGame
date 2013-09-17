@@ -86,7 +86,7 @@
 				}
 				if (targetOpen[targetCell] == "y" && targetUsed[targetCell] == "n" || moves > (sideLength * sideLength)) {
 					if (sourceInfo[sourceCell] == targetInfo[targetCell]) {
-						ident.innerHTML = targetInfo[targetCell];
+						ident.innerHTML = "<font size ='6'><pre>  " + targetInfo[targetCell] + "</pre></font>";
 						targetUsed[targetCell] = "y";
 						openAdjacent(targetCell);
 						document.getElementById(ident.id).bgColor = "#CCCCFF";
@@ -148,7 +148,6 @@
 			if (debug) {
 				console.log('Got ' + pointInput);
 			}
-			console.log(pointInput);
 			if(pointInput = "" || parseInt(pointInput) < 1 || pointInput == false){
 				startingPoints = 1;
 			}
@@ -177,11 +176,13 @@
 			t += '<table border="" cellspacing="0" cellpadding="0">';
 			t += '<td width = "80" height = "80" bgColor="#AAAAAA"></td>';
 			for ( j = 0; j < sideLength; j++) {
-				t += '<td width = "80" height = "80" bgColor="#AAAAAA">' + (parseInt(lowerRange) + parseInt(j)) + '</td>';
+				var innerText = "<font size ='6'><pre>  " + (parseInt(lowerRange) + parseInt(j)) + "</pre></font>";
+				t += '<td width = "80" height = "80" bgColor="#AAAAAA">' + innerText + '</td>';
 			}
 			for ( i = 0; i < sideLength; i++) {
+				var innerTextTwo = "<font size ='6'><pre>  " + (parseInt(lowerRange) + parseInt(i)) + "</pre></font>";
 				t += '<tr>';
-				t += '<td width = "80" height = "80" bgColor="#AAAAAA">' + (parseInt(lowerRange) + parseInt(i)) + '</td>';
+				t += '<td width = "80" height = "80" bgColor="#AAAAAA">' + innerTextTwo + '</td>';
 				var innerNum = parseInt(i) + parseInt(lowerRange);
 				for ( j = 0; j < sideLength; j++) {
 					var ident = 'T' + j + i;
