@@ -41,7 +41,6 @@
 			}
 			sourceCell = ident.id;
 			document.getElementById(sourceCell).bgColor = '#FFCCCC';
-			console.log(sourceCell);
 			if (debug) {
 				console.log("From " + ident + ',' + sourceCell);
 			}
@@ -49,9 +48,8 @@
 		
 		function openCell(r, c){
 			var id = "T" + r + c;
-			console.log(id);
-			console.log(targetUsed[id]);
-			if(r > sideLength || c > sideLength || r < 0 || c < 0 || targetUsed[id] == "y"){
+			//console.log(targetUsed[id]);
+			if(r > (parseInt(sideLength) -1) || c > (parseInt(sideLength) -1) || r < 0 || c < 0 || targetUsed[id] == "y"){
 				return;
 			}
 			targetOpen[id] = "y";
@@ -61,6 +59,9 @@
 		function openAdjacent(cellId){
 			var row = targetRow[cellId];
 			var col = targetCol[cellId];
+			if(row < 1 || row > 9|| col < 1 || col > 9){
+				return;
+			}
 			openCell(parseInt(row) + 1, col);
 			openCell(parseInt(row) - 1, col);
 			openCell(row, parseInt(col) + 1);
