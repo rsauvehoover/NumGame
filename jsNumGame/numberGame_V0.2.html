@@ -49,7 +49,7 @@
 		function openCell(r, c){
 			var id = "T" + r + c;
 			//console.log(targetUsed[id]);
-			if(r > (parseInt(sideLength) -1) || c > (parseInt(sideLength) -1) || r < 0 || c < 0 || targetUsed[id] == "y"){
+			if(r >  (parseInt(sideLength) -1)|| c > (parseInt(sideLength) -1) || r == -1 || c == -1 || targetUsed[id] == "y"){
 				return;
 			}
 			targetOpen[id] = "y";
@@ -59,9 +59,9 @@
 		function openAdjacent(cellId){
 			var row = targetRow[cellId];
 			var col = targetCol[cellId];
-			if(row < 1 || row > 9|| col < 1 || col > 9){
+			/*if(row < 1 || row > 9|| col < 1 || col > 9){
 				return;
-			}
+			}*/
 			openCell(parseInt(row) + 1, col);
 			openCell(parseInt(row) - 1, col);
 			openCell(row, parseInt(col) + 1);
@@ -212,8 +212,9 @@
 				t += '<td width = "80" height = "80" bgColor="#AAAAAA">Source</td>';
 				for ( j = 0; j < sideLength; j++) {
 					var upperProduct = (parseInt(lowerRange) + (parseInt(sideLength) - 1)) * (parseInt(lowerRange) + (parseInt(sideLength) - 1));
+					console.log(upperProduct);
 					var lowerProduct = parseInt(lowerRange) * parseInt(lowerRange);
-					var ranProd = Math.floor(Math.random() * upperProduct + lowerProduct);
+					var ranProd = Math.floor(Math.random() * upperProduct) + lowerProduct);
 					var ident = 'S' + j + i;
 					// save the number associated with the cell
 					sourceInfo[ident] = ranProd;
