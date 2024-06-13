@@ -72,7 +72,10 @@ export const useSettingsStore = defineStore({
       document.documentElement.setAttribute("data-theme", mode);
       this.updateSettings({ mode });
     },
-    setLangauge(language: Language) {
+    toggleMode() {
+      this.setMode(this.settings.mode === Mode.dark ? Mode.light : Mode.dark);
+    },
+    setLanguage(language: Language) {
       this.updateSettings({ language });
     },
     toggleTimer() {
