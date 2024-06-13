@@ -10,6 +10,9 @@
 
   --vt-c-indigo: #2c3e50;
 
+  --vt-c-slate: #6b7687;
+  --vt-c-grey: #9fa7ad;
+
   --vt-c-divider-light-1: rgba(60, 60, 60, 0.29);
   --vt-c-divider-light-2: rgba(60, 60, 60, 0.12);
   --vt-c-divider-dark-1: rgba(84, 84, 84, 0.65);
@@ -21,16 +24,12 @@
   --vt-c-text-dark-2: rgba(235, 235, 235, 0.64);
 }
 
-/* board colours */
-:root {
-  --color-active-square: #e7e9ec;
-  --color-display-square: #6b7687;
-  --color-complete-square: #c6ffa0;
-  --color-default-square: #9fa7ad;
-}
-
 /* semantic color variables for this project */
 :root {
+  --color-active-square: var(--vt-c-white);
+  --color-display-square: var(--vt-c-slate);
+  --color-default-square: var(--vt-c-grey);
+
   --color-background: var(--vt-c-white);
   --color-background-soft: var(--vt-c-white-soft);
   --color-background-mute: var(--vt-c-white-mute);
@@ -46,6 +45,10 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
+    --color-active-square: var(--vt-c-white);
+    --color-display-square: var(--vt-c-slate);
+    --color-default-square: var(--vt-c-grey);
+
     --color-background: var(--vt-c-black);
     --color-background-soft: var(--vt-c-black-soft);
     --color-background-mute: var(--vt-c-black-mute);
