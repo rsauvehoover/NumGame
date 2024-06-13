@@ -8,13 +8,13 @@ export interface Range {
 }
 
 export enum Mode {
-  dark,
-  light
+  dark = "dark",
+  light = "light"
 }
 
 export enum Language {
-  en,
-  fr
+  en = "en",
+  fr = "fr"
 }
 
 export interface Settings {
