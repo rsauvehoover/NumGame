@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="container">
     <DarkModeToggle />
   </div>
 </template>
@@ -16,3 +16,9 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (ev
   settingsStore.setMode(event.matches ? Mode.dark : Mode.light);
 });
 </script>
+
+<style scoped>
+.container {
+  height: 80px;
+}
+</style>

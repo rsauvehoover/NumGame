@@ -1,7 +1,7 @@
 <template>
-  <label>
-    <input type="checkbox" class="modeToggle" v-model="mode" :true-value="Mode.dark" :false-value="Mode.light" />
-    <img :src="mode === Mode.light ? DarkIcon : LightIcon" />
+  <label class="toggleButton">
+    <input type="checkbox" class="checkbox" v-model="mode" :true-value="Mode.dark" :false-value="Mode.light" />
+    <img class="icon" :src="mode === Mode.dark ? DarkIcon : LightIcon" />
   </label>
 </template>
 
@@ -21,15 +21,30 @@ const mode = computed({
     settingsStore.setMode(mode);
   }
 });
-
-const toggleTheme = () => {
-  settingsStore.toggleMode();
-  console.log(mode);
-};
 </script>
 
 <style scoped>
-.modeToggle {
+.toggleButton {
+  display: flex;
+  height: 100%;
+  border-radius: 50%;
+}
+
+.toggleButton:hover {
+  background-color: var(--color-background-mute);
+  border: 0.1em solid var(--color-border-hover);
+}
+
+.icon {
+  height: 100%;
+  padding: 0.3em;
+}
+
+.icon:hover {
+  padding: 0.2em;
+}
+
+.checkbox {
   display: none;
 }
 </style>
