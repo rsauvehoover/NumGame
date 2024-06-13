@@ -36,15 +36,26 @@ const getDefaultSettings = (): Settings => ({
   dyslexicFont: false
 });
 
-const getSettings = () => {
-  const settings = localStorage.getItem(SETTINGS_LOCAL_STORAGE_KEY);
+const initSettings = () => {
+  const localSettings = localStorage.getItem(SETTINGS_LOCAL_STORAGE_KEY);
+  let settings: Settings = getDefaultSettings();
 
-  return settings ? JSON.parse(settings) : getDefaultSettings();
+  if (!localSettings) {
+    if (window.matchMedia("(prefers-color-scheme: light)").matches) {
+      settings = { ...settings, mode: Mode.light };
+    }
+  } else {
+    settings = JSON.parse(localSettings);
+  }
+
+  document.documentElement.setAttribute("data-theme", settings.mode);
+
+  return settings;
 };
 
 export const useSettingsStore = defineStore({
   id: "settings",
-  state: () => ({ settings: getSettings() }),
+  state: () => ({ settings: initSettings() }),
   actions: {
     updateSettings(partialSettings: Partial<Settings>) {
       this.settings = {
@@ -58,6 +69,7 @@ export const useSettingsStore = defineStore({
       this.updateSettings({ range });
     },
     setMode(mode: Mode) {
+      document.documentElement.setAttribute("data-theme", mode);
       this.updateSettings({ mode });
     },
     setLangauge(language: Language) {
