@@ -1,6 +1,6 @@
 <template>
   <div class="container">
-    <DarkModeToggle />
+    <HeaderBar />
   </div>
 </template>
 
@@ -19,6 +19,6 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (ev
 
 <style scoped>
 .container {
-  height: 80px;
+  width: 100%;
 }
 </style>

@@ -25,23 +25,22 @@ const mode = computed({
 
 <style scoped>
 .toggleButton {
+  box-sizing: border-box;
+  aspect-ratio: 1;
   display: flex;
   height: 100%;
   border-radius: 50%;
+  border: 0.1rem solid transparent;
 }
 
 .toggleButton:hover {
   background-color: var(--color-background-mute);
-  border: 0.1em solid var(--color-border-hover);
+  border: 0.1rem solid var(--color-border-hover);
 }
 
 .icon {
   height: 100%;
-  padding: 0.3em;
-}
-
-.icon:hover {
-  padding: 0.2em;
+  padding: 0.3rem;
 }
 
 .checkbox {
