@@ -1,12 +1,15 @@
 <template>
-  <IconButton @onClick="toggle" :icon="SettingsIcon" />
+  <div class="container" @click="emit('onClick')">
+    <img class="icon" :src="icon" />
+  </div>
 </template>
 
 <script setup lang="ts">
-import SettingsIcon from "@/assets/settings.svg";
-import IconButton from "@/components/IconButton.vue";
+defineProps<{
+  icon: String;
+}>();
 
-const toggle = () => console.log("open Settings");
+const emit = defineEmits(["onClick"]);
 </script>
 
 <style scoped>

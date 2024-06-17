@@ -4,7 +4,7 @@
   </div>
 </template>
 
-<script setup>
+<script setup lang="ts">
 import HeaderBar from "@/components/HeaderBar.vue";
 import DarkModeToggle from "@/components/DarkModeToggle.vue";
 import { computed } from "vue";
