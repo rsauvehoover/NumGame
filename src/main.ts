@@ -9,6 +9,7 @@ import enUS from "@/locales/en-US.json";
 import frCA from "@/locales/fr-CA.json";
 
 const i18n = createI18n({
+  legacy: false,
   locale: "en-US",
   fallbackLocale: "en-US",
   messages: { "en-US": enUS, "fr-CA": frCA }

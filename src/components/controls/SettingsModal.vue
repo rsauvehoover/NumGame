@@ -4,7 +4,7 @@
 
 <script setup lang="ts">
 import SettingsIcon from "@/assets/settings.svg";
-import IconButton from "@/components/IconButton.vue";
+import IconButton from "@/components/shared/IconButton.vue";
 
 const toggle = () => console.log("open Settings");
 </script>

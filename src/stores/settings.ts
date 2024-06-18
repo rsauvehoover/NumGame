@@ -13,8 +13,8 @@ export enum Mode {
 }
 
 export enum Language {
-  en = "en",
-  fr = "fr"
+  en = "en-US",
+  fr = "fr-CA"
 }
 
 export interface Settings {

@@ -5,8 +5,8 @@
 </template>
 
 <script setup lang="ts">
-import HeaderBar from "@/components/HeaderBar.vue";
-import DarkModeToggle from "@/components/DarkModeToggle.vue";
+import HeaderBar from "@/components/controls/HeaderBar.vue";
+import DarkModeToggle from "@/components/controls/DarkModeToggle.vue";
 import { computed } from "vue";
 import { useSettingsStore, Mode } from "@/stores/settings";
 
