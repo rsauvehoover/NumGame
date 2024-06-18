@@ -81,8 +81,8 @@ export const useSettingsStore = defineStore({
     toggleTimer() {
       this.updateSettings({ timer: !this.settings.timer });
     },
-    toggleDyslexicFont() {
-      this.updateSettings({ dyslexicFont: !this.settings.dyslexicFont });
+    setDyslexicFont(val: boolean) {
+      this.updateSettings({ dyslexicFont: val });
     }
   },
   getters: {

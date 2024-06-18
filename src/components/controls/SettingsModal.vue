@@ -5,19 +5,43 @@
     overlay-transition="vfm-fade"
     content-transition="vfm-fade"
   >
-    <h1>{{ $t("settings.title") }}</h1>
-    <div>test</div>
-    <div>test</div>
-    <div>test</div>
-    <div>test</div>
-    <div class="buttonContainer">
-      <button @click="emit('close')">{{ $t("settings.close") }}</button>
+    <div :class="{ dyslexicFont: dyslexicFont }">
+      <h1>{{ $t("settings.title") }}</h1>
+      <div>Min {{ range.min }}</div>
+      <div>Max {{ range.max }}</div>
+      <div>Dyslexia font <input type="checkbox" v-model="dyslexicFont" /></div>
+      <div>test</div>
+      <div class="buttonContainer">
+        <button @click="emit('close')">{{ $t("settings.close") }}</button>
+      </div>
     </div>
   </VueFinalModal>
 </template>
 
 <script setup lang="ts">
 import { VueFinalModal } from "vue-final-modal";
+import { useSettingsStore, type Range } from "@/stores/settings";
+import { computed } from "vue";
+
+const settingsStore = useSettingsStore();
+
+const range = computed({
+  get() {
+    return settingsStore.range;
+  },
+  set(val: Range) {
+    settingsStore.setRange(val);
+  }
+});
+
+const dyslexicFont = computed({
+  get() {
+    return settingsStore.dyslexicFontActive;
+  },
+  set(val: boolean) {
+    settingsStore.setDyslexicFont(val);
+  }
+});
 
 const emit = defineEmits<{
   (e: "close"): void;
@@ -53,5 +77,9 @@ const emit = defineEmits<{
   display: flex;
   margin: auto;
   justify-content: center;
+}
+
+.dyslexicFont {
+  font-family: opendyslexic3regular;
 }
 </style>
