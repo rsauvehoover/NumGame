@@ -3,7 +3,7 @@
 </template>
 
 <script setup lang="ts">
-import { ModalsContainer, useModal } from "vue-final-modal";
+import { useModal } from "vue-final-modal";
 import SettingsModal from "@/components/controls/SettingsModal.vue";
 import SettingsIcon from "@/assets/settings.svg";
 import IconButton from "@/components/shared/IconButton.vue";
