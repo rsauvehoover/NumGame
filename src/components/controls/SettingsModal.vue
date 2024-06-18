@@ -57,6 +57,7 @@ const emit = defineEmits<{
 
 .modal-content {
   display: flex;
+  min-width: 40vw;
   flex-direction: column;
   padding: 1rem;
   border-radius: 0.5rem;

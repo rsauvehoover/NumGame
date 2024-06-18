@@ -11,7 +11,6 @@ import IconButton from "@/components/shared/IconButton.vue";
 const { open, close } = useModal({
   component: SettingsModal,
   attrs: {
-    title: "Hello World!",
     onClose() {
       close();
     }

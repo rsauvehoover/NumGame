@@ -6,7 +6,7 @@
 
 <script setup lang="ts">
 defineProps<{
-  icon: String;
+  icon: string;
 }>();
 
 const emit = defineEmits(["onClick"]);
