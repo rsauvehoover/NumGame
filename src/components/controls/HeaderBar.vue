@@ -3,7 +3,7 @@
     <span />
     <h2 class="title">{{ $t("title") }}</h2>
     <div class="controlContainer">
-      <SettingsModal />
+      <SettingsButton />
       <TimerToggle />
       <LocaleSwitcher />
       <DarkModeToggle />
@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import SettingsModal from "@/components/controls/SettingsModal.vue";
+import SettingsButton from "@/components/controls/SettingsButton.vue";
 import TimerToggle from "@/components/controls/TimerToggle.vue";
 import LocaleSwitcher from "@/components/controls/LocaleSwitcher.vue";
 import DarkModeToggle from "@/components/controls/DarkModeToggle.vue";

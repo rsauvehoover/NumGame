@@ -1,6 +1,7 @@
 <template>
   <div class="container">
     <HeaderBar />
+    <ModalsContainer />
   </div>
 </template>
 
@@ -9,6 +10,7 @@ import HeaderBar from "@/components/controls/HeaderBar.vue";
 import DarkModeToggle from "@/components/controls/DarkModeToggle.vue";
 import { computed } from "vue";
 import { useSettingsStore, Mode } from "@/stores/settings";
+import { ModalsContainer } from "vue-final-modal";
 
 const settingsStore = useSettingsStore();
 

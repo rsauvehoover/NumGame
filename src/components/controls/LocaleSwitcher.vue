@@ -47,7 +47,7 @@ watchEffect(() => {
 .items {
   background: var(--color-background);
   border: 2px solid var(--color-border);
-  border-radius: 6px;
+  border-radius: 0.5rem;
   position: absolute;
   z-index: 1;
 }

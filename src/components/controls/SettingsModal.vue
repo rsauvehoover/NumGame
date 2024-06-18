@@ -1,35 +1,57 @@
 <template>
-  <IconButton @onClick="toggle" :icon="SettingsIcon" />
+  <VueFinalModal
+    class="modal"
+    content-class="modal-content"
+    overlay-transition="vfm-fade"
+    content-transition="vfm-fade"
+  >
+    <h1>{{ $t("settings.title") }}</h1>
+    <div>test</div>
+    <div>test</div>
+    <div>test</div>
+    <div>test</div>
+    <div class="buttonContainer">
+      <button @click="emit('close')">{{ $t("settings.close") }}</button>
+    </div>
+  </VueFinalModal>
 </template>
 
 <script setup lang="ts">
-import SettingsIcon from "@/assets/settings.svg";
-import IconButton from "@/components/shared/IconButton.vue";
+import { VueFinalModal } from "vue-final-modal";
 
-const toggle = () => console.log("open Settings");
+const emit = defineEmits<{
+  (e: "close"): void;
+}>();
 </script>
 
-<style scoped>
-.container {
-  box-sizing: border-box;
-  aspect-ratio: 1;
-  height: 100%;
+<style>
+.modal {
   display: flex;
-  border-radius: 50%;
-  border: 0.1rem solid transparent;
+  justify-content: center;
+  align-items: center;
 }
 
-.container:hover {
-  background-color: var(--color-background-mute);
-  border: 0.1rem solid var(--color-border-hover);
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  background-color: var(--color-background);
+  border: 0.1rem solid var(--color-border);
 }
 
-.icon {
-  height: 100%;
-  padding: 0.3rem;
+.modal-content > * + * {
+  margin: 0.5rem 0;
 }
 
-[data-theme="light"] .icon {
-  filter: invert(100%);
+.modal-content h1 {
+  font-size: 1.375rem;
+}
+
+.buttonContainer {
+  width: 100%;
+  display: flex;
+  margin: auto;
+  justify-content: center;
 }
 </style>
