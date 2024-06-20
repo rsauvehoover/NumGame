@@ -25,6 +25,7 @@ const emit = defineEmits(["onClick"]);
 .container:hover {
   background-color: var(--color-background-mute);
   border: 0.1rem solid var(--color-border-hover);
+  cursor: pointer;
 }
 
 .icon {

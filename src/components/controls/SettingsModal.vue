@@ -6,13 +6,15 @@
     content-transition="vfm-fade"
   >
     <div :class="{ dyslexicFont: dyslexicFont }">
-      <h1>{{ $t("settings.title") }}</h1>
+      <div class="titleContainer">{{ $t("settings.title") }}</div>
       <div>Min {{ range.min }}</div>
       <div>Max {{ range.max }}</div>
-      <div>Dyslexia font <input type="checkbox" v-model="dyslexicFont" /></div>
+      <div style="display: flex">
+        Dyslexia font<input class="toggle" type="checkbox" v-model="dyslexicFont" />
+      </div>
       <div>test</div>
       <div class="buttonContainer">
-        <button @click="emit('close')">{{ $t("settings.close") }}</button>
+        <button class="closeButton" @click="emit('close')">{{ $t("settings.close") }}</button>
       </div>
     </div>
   </VueFinalModal>
@@ -57,9 +59,9 @@ const emit = defineEmits<{
 
 .modal-content {
   display: flex;
-  min-width: 40vw;
+  min-width: 20vw;
   flex-direction: column;
-  padding: 1rem;
+  padding: 0.4rem 1rem 0.8rem 1rem;
   border-radius: 0.5rem;
   background-color: var(--color-background);
   border: 0.1rem solid var(--color-border);
@@ -73,11 +75,36 @@ const emit = defineEmits<{
   font-size: 1.375rem;
 }
 
+.titleContainer {
+  width: 100%;
+  display: flex;
+  text-align: center;
+  justify-content: center;
+  font-size: 2rem;
+}
+
+.toggle {
+  margin-left: auto;
+}
+
 .buttonContainer {
   width: 100%;
   display: flex;
   margin: auto;
   justify-content: center;
+}
+
+.closeButton {
+  border-radius: 0.3rem;
+  border-style: none;
+  outline: none;
+  padding: 0.5rem 0.8rem;
+  background: var(--vt-c-blue);
+}
+
+.closeButton:hover {
+  cursor: pointer;
+  background: var(--vt-c-blue-muted);
 }
 
 .dyslexicFont {

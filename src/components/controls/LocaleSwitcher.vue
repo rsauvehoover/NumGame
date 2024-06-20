@@ -59,6 +59,7 @@ watchEffect(() => {
 
 .items div:hover {
   background-color: var(--color-background-mute);
+  cursor: pointer;
 }
 
 .selectHide {
