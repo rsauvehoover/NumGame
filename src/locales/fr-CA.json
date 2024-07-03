@@ -2,6 +2,7 @@
   "title": "Jeu de Multiplication",
   "settings": {
     "title": "Paramètres",
-    "close": "Ferme"
+    "close": "Ferme",
+    "fontToggle": "Police pour la dyslexie"
   }
 }

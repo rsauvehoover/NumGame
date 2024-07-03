@@ -10,7 +10,8 @@
       <div>Min {{ range.min }}</div>
       <div>Max {{ range.max }}</div>
       <div style="display: flex">
-        Dyslexia font<input :class="$style.toggle" type="checkbox" v-model="dyslexicFont" />
+        {{ $t("settings.fontToggle")
+        }}<input :class="$style.toggle" type="checkbox" v-model="dyslexicFont" />
       </div>
       <div>test</div>
       <div :class="$style.buttonContainer">

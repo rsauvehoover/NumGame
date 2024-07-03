@@ -2,6 +2,7 @@
   "title": "Multiplication Game",
   "settings": {
     "title": "Settings",
-    "close": "Close"
+    "close": "Close",
+    "fontToggle": "Dyslexia friendly font"
   }
 }
