@@ -28,7 +28,6 @@ import DarkModeToggle from "@/components/controls/DarkModeToggle.vue";
 }
 
 .title {
-  color: var(--color-heading);
   font-weight: 500;
   grid-column: 2;
   justify-self: center;
