@@ -20,20 +20,51 @@ import DarkModeToggle from "@/components/controls/DarkModeToggle.vue";
 
 <style module>
 .header {
-  display: flex;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
   width: 100%;
   border: 2px solid var(--color-border);
-  justify-content: space-between;
   padding: 0.3rem 3rem 0.3rem 3rem;
 }
 
 .title {
   color: var(--color-heading);
   font-weight: 500;
+  grid-column: 2;
+  justify-self: center;
+  line-height: 200%;
+  text-align: center;
 }
 
 .controlContainer {
   display: flex;
   column-gap: 0.5rem;
+  grid-column: 3;
+  justify-self: end;
+}
+
+@media (max-width: 950px) {
+  .header {
+    grid-template-columns: auto 1fr 1fr;
+  }
+}
+
+@media (max-width: 650px) {
+  .header {
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr 35px;
+  }
+
+  .title {
+    grid-row: 1;
+    grid-column: 1;
+    font-size: 1rem;
+  }
+
+  .controlContainer {
+    grid-row: 2;
+    grid-column: 1;
+    justify-self: center;
+  }
 }
 </style>
