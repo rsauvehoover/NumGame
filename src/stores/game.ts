@@ -35,10 +35,8 @@ export const useGameStore = defineStore({
         this.timer = { on: true, start: new Date(), elapsed: new Date(0) };
       }
     },
-    timerRefresh(): Date {
-      const elapsed = new Date(new Date().getTime() - this.timer.start.getTime());
-      this.timer.elapsed = elapsed;
-      return elapsed;
+    timerRefresh() {
+      this.timer.elapsed = new Date(new Date().getTime() - this.timer.start.getTime());
     },
     stopTimer() {
       this.timer.on = false;
