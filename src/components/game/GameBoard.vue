@@ -1,11 +1,11 @@
 <template>
-  <div :class="$style.container">this is the board</div>
+  <div :class="$style.container">BOARD</div>
 </template>
 
 <script setup lang="ts"></script>
 
 <style module>
 .container {
-  border: 2px solid red;
+  border: 1px solid green;
 }
 </style>
