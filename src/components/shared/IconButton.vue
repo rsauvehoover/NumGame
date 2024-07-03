@@ -1,6 +1,6 @@
 <template>
-  <div class="container" @click="emit('onClick')">
-    <img class="icon" :src="icon" />
+  <div :class="$style.container" @click="emit('onClick')">
+    <img :class="$style.icon" :src="icon" />
   </div>
 </template>
 
@@ -12,7 +12,7 @@ defineProps<{
 const emit = defineEmits(["onClick"]);
 </script>
 
-<style scoped>
+<style module>
 .container {
   box-sizing: border-box;
   aspect-ratio: 1;

@@ -1,8 +1,8 @@
 <template>
-  <div class="header">
+  <div :class="$style.header">
     <span />
-    <h2 class="title">{{ $t("title") }}</h2>
-    <div class="controlContainer">
+    <h2 :class="$style.title">{{ $t("title") }}</h2>
+    <div :class="$style.controlContainer">
       <SettingsButton />
       <TimerToggle />
       <LocaleSwitcher />
@@ -18,7 +18,7 @@ import LocaleSwitcher from "@/components/controls/LocaleSwitcher.vue";
 import DarkModeToggle from "@/components/controls/DarkModeToggle.vue";
 </script>
 
-<style scoped>
+<style module>
 .header {
   display: flex;
   width: 100%;

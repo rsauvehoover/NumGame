@@ -1,7 +1,7 @@
 <template>
-  <div class="container">
+  <div :class="$style.container">
     <IconButton @onClick="open = !open" :icon="TranslateIcon" />
-    <div class="items" :class="{ selectHide: !open }">
+    <div :class="{ [$style.items]: true, [$style.selectHide]: !open }">
       <div v-for="(lang, i) of langs" :key="i" @click="handleSelect(lang.code)">
         {{ lang.text }}
       </div>
@@ -39,7 +39,7 @@ watchEffect(() => {
 });
 </script>
 
-<style scoped>
+<style module>
 .container {
   position: relative;
 }

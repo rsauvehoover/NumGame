@@ -5,16 +5,18 @@
     overlay-transition="vfm-fade"
     content-transition="vfm-fade"
   >
-    <div :class="{ dyslexicFont: dyslexicFont }">
-      <div class="titleContainer">{{ $t("settings.title") }}</div>
+    <div :class="{ [$style.dyslexicFont]: dyslexicFont }">
+      <div :class="$style.titleContainer">{{ $t("settings.title") }}</div>
       <div>Min {{ range.min }}</div>
       <div>Max {{ range.max }}</div>
       <div style="display: flex">
-        Dyslexia font<input class="toggle" type="checkbox" v-model="dyslexicFont" />
+        Dyslexia font<input :class="$style.toggle" type="checkbox" v-model="dyslexicFont" />
       </div>
       <div>test</div>
-      <div class="buttonContainer">
-        <button class="closeButton" @click="emit('close')">{{ $t("settings.close") }}</button>
+      <div :class="$style.buttonContainer">
+        <button :class="$style.closeButton" @click="emit('close')">
+          {{ $t("settings.close") }}
+        </button>
       </div>
     </div>
   </VueFinalModal>
@@ -74,7 +76,9 @@ const emit = defineEmits<{
 .modal-content h1 {
   font-size: 1.375rem;
 }
+</style>
 
+<style module>
 .titleContainer {
   width: 100%;
   display: flex;
@@ -99,7 +103,7 @@ const emit = defineEmits<{
   border-style: none;
   outline: none;
   padding: 0.5rem 0.8rem;
-  background: var(--vt-c-blue);
+  background: var(--vt-c-grey);
 }
 
 .closeButton:hover {

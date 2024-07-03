@@ -1,12 +1,14 @@
 <template>
-  <div class="container" :class="{ dyslexicFont: dyslexicFontActive }">
+  <div :class="{ [$style.container]: true, [$style.dyslexicFont]: dyslexicFontActive }">
     <HeaderBar />
+    <GameBoard />
     <ModalsContainer />
   </div>
 </template>
 
 <script setup lang="ts">
 import HeaderBar from "@/components/controls/HeaderBar.vue";
+import GameBoard from "@/components/game/GameBoard.vue";
 import { ModalsContainer } from "vue-final-modal";
 import { storeToRefs } from "pinia";
 import { useSettingsStore, Mode } from "@/stores/settings";
@@ -19,7 +21,7 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (ev
 });
 </script>
 
-<style scoped>
+<style module>
 .container {
   width: 100%;
 }
