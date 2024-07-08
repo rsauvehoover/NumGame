@@ -1,8 +1,12 @@
 <template>
-  <div :class="$style.container">hand</div>
+  <div :class="$style.container">
+    <NumCard />
+  </div>
 </template>
 
-<script setup lang="ts"></script>
+<script setup lang="ts">
+import NumCard from "@/components/game/NumCard.vue";
+</script>
 
 <style module>
 .container {

@@ -1,33 +1,18 @@
 import { defineStore } from "pinia";
+import { type Tile, type Timer, TileState } from "@/stores/game.types";
 
-export enum TileState {
-  Inactive,
-  Active,
-  Complete,
-  Display
-}
-
-// TODO: Board tiles shouldn't necessarily show the value when completed (only for Display?)
-// That way when cards are dragged onto the board they can be left (with drop shadows etc as if a card was placed on a play area)
-
-export interface Tile {
-  state: TileState;
-  value: number;
-  row: number;
-  col: number;
-}
-
-export interface Timer {
-  on: boolean;
-  start: Date;
-  elapsed: Date;
+interface State {
+  board: Record<string, Tile>;
+  timer: Timer;
+  hand: number[];
 }
 
 export const useGameStore = defineStore({
   id: "game",
-  state: () => ({
-    board: [] as Tile[],
-    timer: { on: false, start: new Date(), elapsed: new Date(0) } as Timer
+  state: (): State => ({
+    board: {} as Record<string, Tile>,
+    timer: { on: false, start: new Date(), elapsed: new Date(0) },
+    hand: []
   }),
   actions: {
     startTimer() {
@@ -40,6 +25,9 @@ export const useGameStore = defineStore({
     },
     stopTimer() {
       this.timer.on = false;
+    },
+    setTileState(id: string, state: TileState) {
+      this.board[id].state = state;
     }
   },
   getters: {

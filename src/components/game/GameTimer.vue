@@ -3,14 +3,14 @@
 </template>
 
 <script setup lang="ts">
-import { ref, watchEffect, onBeforeUnmount } from "vue";
+import { watchEffect, onBeforeUnmount } from "vue";
 import { storeToRefs } from "pinia";
-import { type Timer, useGameStore } from "@/stores/game";
+import { useGameStore } from "@/stores/game";
 
 const gameStore = useGameStore();
 const { timerOn, timer } = storeToRefs(gameStore);
 
-let intervalId;
+let intervalId: ReturnType<typeof setInterval>;
 
 const startTimer = () => {
   intervalId = setInterval(() => {
@@ -22,7 +22,7 @@ const stopTimer = () => {
   clearInterval(intervalId);
 };
 
-const zeroPrefix = (val, digits) => ("000000000" + val).substr(-digits);
+const zeroPrefix = (val: number, digits: number) => ("000000000" + val).substring(10 - digits);
 
 const formatTime = (time: Date) => {
   return `${zeroPrefix(time.getUTCMinutes(), 2)}:${zeroPrefix(time.getUTCSeconds(), 2)}.${zeroPrefix(Math.floor(time.getUTCMilliseconds() / 10), 2)}`;

@@ -3,12 +3,12 @@
     <HeaderBar />
     <div :class="{ [$style.gameContainer]: true, [$style.timer]: timerActive }">
       <GameTimer v-if="timerActive" />
-      <!-- <GameBoard /> -->
+      <GameBoard />
       <div>
         <button @click="timerStart">TIMER START</button>
         <button @click="timerStop">TIMER STOP</button>
+        <PlayerHand />
       </div>
-      <PlayerHand />
     </div>
     <ModalsContainer />
   </div>
