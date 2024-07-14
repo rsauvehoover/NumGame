@@ -1,10 +1,6 @@
 <template>
-  <VueFinalModal
-    class="modal"
-    content-class="modal-content"
-    overlay-transition="vfm-fade"
-    content-transition="vfm-fade"
-  >
+  <VueFinalModal class="modal" content-class="modal-content" overlay-transition="vfm-fade"
+    content-transition="vfm-fade">
     <div :class="{ [$style.dyslexicFont]: dyslexicFont }">
       <div :class="$style.titleContainer">{{ $t("settings.title") }}</div>
       <div>Min {{ range.min }}</div>
@@ -12,12 +8,6 @@
       <div style="display: flex">
         {{ $t("settings.fontToggle")
         }}<input :class="$style.toggle" type="checkbox" v-model="dyslexicFont" />
-      </div>
-      <div>test</div>
-      <div :class="$style.buttonContainer">
-        <button :class="$style.closeButton" @click="emit('close')">
-          {{ $t("settings.close") }}
-        </button>
       </div>
     </div>
   </VueFinalModal>
@@ -70,7 +60,7 @@ const emit = defineEmits<{
   border: 0.1rem solid var(--color-border);
 }
 
-.modal-content > * + * {
+.modal-content>*+* {
   margin: 0.5rem 0;
 }
 

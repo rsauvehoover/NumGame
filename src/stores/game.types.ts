@@ -15,4 +15,5 @@ export interface Tile {
   row: number;
   col: number;
   state: TileState;
+  hovered: boolean;
 }

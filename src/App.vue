@@ -4,36 +4,38 @@
     <div :class="{ [$style.gameContainer]: true, [$style.timer]: timerActive }">
       <GameTimer v-if="timerActive" />
       <GameBoard />
-      <div>
-        <button @click="timerStart">TIMER START</button>
-        <button @click="timerStop">TIMER STOP</button>
-        <PlayerHand />
-      </div>
+      <PlayerHand />
     </div>
     <ModalsContainer />
   </div>
 </template>
 
 <script setup lang="ts">
-import HeaderBar from "@/components/controls/HeaderBar.vue";
-import GameBoard from "@/components/game/GameBoard.vue";
-import PlayerHand from "@/components/game/PlayerHand.vue";
-import GameTimer from "@/components/game/GameTimer.vue";
+import { watch } from "vue";
 import { ModalsContainer } from "vue-final-modal";
 import { storeToRefs } from "pinia";
 import { useSettingsStore, Mode } from "@/stores/settings";
 import { useGameStore } from "@/stores/game";
+import HeaderBar from "@/components/controls/HeaderBar.vue";
+import GameBoard from "@/components/game/GameBoard.vue";
+import PlayerHand from "@/components/game/PlayerHand.vue";
+import GameTimer from "@/components/game/GameTimer.vue";
 
-const settingsStore = useSettingsStore();
-const { timerActive, dyslexicFontActive } = storeToRefs(settingsStore);
 const gameStore = useGameStore();
+const settingsStore = useSettingsStore();
+const { timerActive, dyslexicFontActive, range } = storeToRefs(settingsStore);
+
+watch(
+  range,
+  () => {
+    gameStore.initializeBoard(range.value);
+  },
+  { immediate: true }
+);
 
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
   settingsStore.setMode(event.matches ? Mode.dark : Mode.light);
 });
-
-const timerStart = () => gameStore.startTimer();
-const timerStop = () => gameStore.stopTimer();
 </script>
 
 <style module>

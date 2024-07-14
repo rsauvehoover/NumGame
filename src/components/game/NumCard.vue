@@ -1,5 +1,9 @@
 <template>
-  <div :class="$style.card" ref="card" @mousedown.prevent="dragStart" @touchstart.prevent="dragStart"></div>
+  <div :class="$style.origin">
+    <div :class="$style.card" ref="card" @mousedown.prevent="dragStart" @touchstart.prevent="dragStart">
+      {{ val }}
+    </div>
+  </div>
 </template>
 
 <script setup lang="ts">
@@ -8,6 +12,8 @@ import { useGameStore } from "@/stores/game";
 import { TileState } from "@/stores/game.types";
 
 const gameStore = useGameStore();
+
+const props = defineProps<{ id: string; val: number }>();
 
 interface Coord {
   x: number;
@@ -46,22 +52,6 @@ const dragRelease = (e: MouseEvent | TouchEvent) => {
   const coord = getCoord(e);
   const target = getSquareUnderCoord(coord);
 
-  console.log(target!.id);
-
-  if (target && gameStore.board[target.id]) {
-    const boundingRect = target?.getBoundingClientRect();
-    if (card.value) {
-      card.value.style.left = `${boundingRect?.left}px`;
-      card.value.style.top = `${boundingRect?.top}px`;
-    }
-
-    gameStore.setTileState(target.id, TileState.Complete);
-
-    // console.log(gameStore.board[0]);
-  } else {
-    move(startCoord);
-  }
-
   if (isMouse) {
     document.removeEventListener("mousemove", handleMove);
     document.removeEventListener("mouseup", dragRelease);
@@ -69,6 +59,23 @@ const dragRelease = (e: MouseEvent | TouchEvent) => {
     document.removeEventListener("touchmove", handleMove);
     document.removeEventListener("touchcancel", dragRelease);
     document.removeEventListener("touchend", dragRelease);
+  }
+
+  if (
+    target &&
+    target.id in gameStore.board &&
+    gameStore.board[target.id].state === TileState.Active &&
+    gameStore.board[target.id].val === props.val
+  ) {
+    const boundingRect = target?.getBoundingClientRect();
+    if (card.value) {
+      card.value.style.left = `${boundingRect?.left}px`;
+      card.value.style.top = `${boundingRect?.top}px`;
+    }
+    gameStore.removeFromHand(props.id);
+    gameStore.setTileState(target.id, TileState.Complete);
+  } else {
+    move(startCoord);
   }
 };
 
@@ -96,6 +103,19 @@ const getCoord = (e: MouseEvent | TouchEvent): Coord => {
 };
 
 const handleMove = (e: MouseEvent | TouchEvent) => {
+  const coord = getCoord(e);
+  const target = getSquareUnderCoord(coord);
+
+  if (
+    target &&
+    target.id in gameStore.board &&
+    gameStore.board[target.id].state === TileState.Active &&
+    gameStore.board[target.id].val === props.val
+  ) {
+    gameStore.setHoveredTile(target.id);
+  } else {
+    gameStore.setHoveredTile("");
+  }
   move(getCoord(e));
 };
 </script>
@@ -107,5 +127,10 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
   width: 50px;
   height: 50px;
   border: 3px solid yellow;
+}
+
+.origin {
+  width: 50px;
+  height: 50px;
 }
 </style>
