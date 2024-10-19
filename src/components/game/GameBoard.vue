@@ -44,6 +44,7 @@ const headerRange = computed(() => {
   display: grid;
   grid-template-columns: 50px auto;
   grid-template-rows: 50px auto;
+  margin-right: 50px;
 }
 
 .board {

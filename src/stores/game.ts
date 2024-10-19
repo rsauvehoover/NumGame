@@ -105,7 +105,7 @@ export const useGameStore = defineStore({
       this.hand = {};
       // always generate one card that matches an active tile as bad luck mitigation
       const matchIdx = randIntFromRange(range.min, range.max);
-      for (let idx = range.min; idx < Math.max(range.max, range.min + 1); idx++) {
+      for (let idx = range.min; idx <= range.max; idx++) {
         const handValue =
           randIntFromRange(range.min, range.max) * randIntFromRange(range.min, range.max);
         if (idx === matchIdx) {

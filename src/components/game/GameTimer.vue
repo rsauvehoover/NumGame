@@ -43,6 +43,9 @@ onBeforeUnmount(() => clearInterval(intervalId));
 .container {
   font-size: 2rem;
   width: 10rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   margin: auto;
 }
 </style>
