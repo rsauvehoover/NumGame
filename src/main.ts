@@ -21,8 +21,8 @@ const vfm = createVfm();
 
 const app = createApp(App);
 
-app.use(createPinia());
 app.use(i18n);
 app.use(vfm);
+app.use(createPinia());
 
 app.mount("#app");

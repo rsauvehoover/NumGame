@@ -5,6 +5,7 @@
       <GameTimer v-if="timerActive" />
       <GameBoard />
       <PlayerHand />
+      <button @click="tmp">Restart</button>
     </div>
     <ModalsContainer />
   </div>
@@ -23,15 +24,33 @@ import GameTimer from "@/components/game/GameTimer.vue";
 
 const gameStore = useGameStore();
 const settingsStore = useSettingsStore();
-const { timerActive, dyslexicFontActive, range } = storeToRefs(settingsStore);
+const { activeTiles } = storeToRefs(gameStore);
+const { timerActive, dyslexicFontActive, range, numStartingTiles } = storeToRefs(settingsStore);
 
 watch(
   range,
   () => {
-    gameStore.initializeBoard(range.value);
+    gameStore.initializeBoard(range.value, numStartingTiles.value);
   },
   { immediate: true }
 );
+
+watch(
+  activeTiles,
+  () => {
+    if (activeTiles.value.length === 0) {
+      // Handle win here
+      alert("your did it");
+      gameStore.stopTimer();
+    }
+  },
+  { immediate: true }
+);
+
+const tmp = () => {
+  gameStore.startTimer();
+  gameStore.initializeBoard(range.value, numStartingTiles.value);
+};
 
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {
   settingsStore.setMode(event.matches ? Mode.dark : Mode.light);

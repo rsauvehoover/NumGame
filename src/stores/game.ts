@@ -48,17 +48,55 @@ export const useGameStore = defineStore({
         this.hoveredTile = "";
       }
     },
-    initializeBoard(range: Range) {
-      for (let i = 0; i < range.min; i++) {
-        this.board[`0,${i}`] = { val: i, row: 0, col: i, state: TileState.Active, hovered: false };
+    activateAdjacentTiles(id: string, range: Range) {
+      const { row, col } = this.board[id];
+      const setActive = (id: string, state: TileState) => {
+        if (this.board[id].state === TileState.Inactive) this.setTileState(id, state);
+      };
+      if (row > range.min) setActive(`${row - 1},${col}`, TileState.Active);
+      if (row < range.max) setActive(`${row + 1},${col}`, TileState.Active);
+      if (col > range.min) setActive(`${row},${col - 1}`, TileState.Active);
+      if (col < range.max) setActive(`${row},${col + 1}`, TileState.Active);
+    },
+    initializeBoard(range: Range, numActive: number) {
+      const coords = [];
+      for (let row = range.min; row <= range.max; row++) {
+        for (let col = range.min; col <= range.max; col++) {
+          coords.push(`${row},${col}`);
+        }
+      }
+
+      // fisher yates shuffle to grab n random non-colliding starting tiles
+      let idx = coords.length;
+      while (idx != 0) {
+        const randIdx = Math.floor(Math.random() * idx);
+        idx--;
+
+        [coords[idx], coords[randIdx]] = [coords[randIdx], coords[idx]];
+      }
+
+      this.board = {};
+      for (let row = range.min; row <= range.max; row++) {
+        for (let col = range.min; col <= range.max; col++) {
+          this.board[`${row},${col}`] = {
+            val: row * col,
+            row: row,
+            col: col,
+            state: TileState.Inactive,
+            hovered: false
+          };
+        }
+      }
+
+      for (const item of coords.slice(0, numActive)) {
+        this.setTileState(item, TileState.Active);
       }
       this.generateHand(range);
     },
-    getRandomActiveTile(): [string, Tile] {
-      const activeTiles = Object.entries(this.board).filter(
-        (entry) => entry[1].state === TileState.Active
-      );
-      return activeTiles[randIntFromRange(0, activeTiles.length - 1)];
+    getRandomActiveTile(): [string, Tile] | null {
+      return this.activeTiles.length
+        ? this.activeTiles[randIntFromRange(0, this.activeTiles.length - 1)]
+        : null;
     },
     removeFromHand(id: string) {
       delete this.hand[id];
@@ -67,16 +105,22 @@ export const useGameStore = defineStore({
       this.hand = {};
       // always generate one card that matches an active tile as bad luck mitigation
       const matchIdx = randIntFromRange(range.min, range.max);
-      for (let idx = range.min; idx <= range.max; idx++) {
+      for (let idx = range.min; idx < range.max; idx++) {
+        const handValue =
+          randIntFromRange(range.min, range.max) * randIntFromRange(range.min, range.max);
         if (idx === matchIdx) {
-          this.hand[idx] = this.getRandomActiveTile()[1].val;
+          const randomTile = this.getRandomActiveTile();
+          this.hand[idx] = randomTile ? randomTile[1].val : handValue;
           continue;
         }
-        this.hand[idx] = randIntFromRange(range.min, range.max);
+        this.hand[idx] = handValue;
       }
     }
   },
   getters: {
+    activeTiles(): [string, Tile][] {
+      return Object.entries(this.board).filter((entry) => entry[1].state === TileState.Active);
+    },
     timerOn(): boolean {
       return this.timer.on;
     }

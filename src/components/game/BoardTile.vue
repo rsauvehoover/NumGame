@@ -1,5 +1,12 @@
 <template>
-  <div :class="{ [$style.square]: true, [$style.hovered]: hovered }" ref="root">
+  <div
+    :class="{
+      [$style.square]: true,
+      [$style.hovered]: hovered,
+      [$style.inactive]: state === TileState.Inactive
+    }"
+    ref="root"
+  >
     {{ state === TileState.Complete ? val : "" }}
   </div>
 </template>
@@ -14,6 +21,11 @@ defineProps<Tile>();
   width: 50px;
   height: 50px;
   border: 1px solid red;
+  background: var(--color-active-square);
+}
+
+.inactive {
+  background: var(--color-default-square);
 }
 
 .hovered {

@@ -19,6 +19,8 @@ export enum Language {
 
 export interface Settings {
   range: Range;
+  scale: number;
+  numStartingTiles: number;
   language: Language;
   mode: Mode;
   timer: boolean;
@@ -30,9 +32,11 @@ const getDefaultSettings = (): Settings => ({
     min: 5,
     max: 10
   },
+  scale: 1,
+  numStartingTiles: 3,
   timer: false,
   language: Language.en,
-  mode: Mode.dark,
+  mode: Mode.light,
   dyslexicFont: false
 });
 
@@ -68,6 +72,9 @@ export const useSettingsStore = defineStore({
     setRange(range: Range) {
       this.updateSettings({ range });
     },
+    setNumStartingTiles(numStartingTiles: number) {
+      this.updateSettings({ numStartingTiles });
+    },
     setMode(mode: Mode) {
       document.documentElement.setAttribute("data-theme", mode);
       this.updateSettings({ mode });
@@ -83,11 +90,18 @@ export const useSettingsStore = defineStore({
     },
     setDyslexicFont(val: boolean) {
       this.updateSettings({ dyslexicFont: val });
+    },
+    setScale(val: number) {
+      if (val <= 0) return;
+      this.updateSettings({ scale: val });
     }
   },
   getters: {
     range(): Range {
       return this.settings.range;
+    },
+    numStartingTiles(): number {
+      return this.settings.numStartingTiles;
     },
     mode(): Mode {
       return this.settings.mode;
@@ -100,6 +114,9 @@ export const useSettingsStore = defineStore({
     },
     dyslexicFontActive(): boolean {
       return this.settings.dyslexicFont;
+    },
+    scale(): number {
+      return this.scale;
     }
   }
 });

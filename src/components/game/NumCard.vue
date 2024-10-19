@@ -1,6 +1,11 @@
 <template>
   <div :class="$style.origin">
-    <div :class="$style.card" ref="card" @mousedown.prevent="dragStart" @touchstart.prevent="dragStart">
+    <div
+      :class="$style.card"
+      ref="card"
+      @mousedown.prevent="dragStart"
+      @touchstart.prevent="dragStart"
+    >
       {{ val }}
     </div>
   </div>
@@ -9,9 +14,11 @@
 <script setup lang="ts">
 import { ref } from "vue";
 import { useGameStore } from "@/stores/game";
+import { useSettingsStore } from "@/stores/settings";
 import { TileState } from "@/stores/game.types";
 
 const gameStore = useGameStore();
+const settingsStore = useSettingsStore();
 
 const props = defineProps<{ id: string; val: number }>();
 
@@ -24,14 +31,12 @@ const card = ref<HTMLElement | null>(null);
 
 let isMouse = true;
 let shiftOffset: Coord = { x: 0, y: 0 };
-let startCoord: Coord = { x: 0, y: 0 };
 
 const dragStart = (e: MouseEvent | TouchEvent) => {
   if (!card.value) return;
   const boundingRect = card.value.getBoundingClientRect();
   if (e instanceof MouseEvent) {
     shiftOffset = { x: e.clientX - boundingRect.left, y: e.clientY - boundingRect.top };
-    startCoord = { x: e.clientX, y: e.clientY };
     move({ x: e.pageX, y: e.pageY });
     document.addEventListener("mousemove", handleMove);
     document.addEventListener("mouseup", dragRelease);
@@ -40,7 +45,6 @@ const dragStart = (e: MouseEvent | TouchEvent) => {
       x: e.changedTouches[0].clientX - boundingRect.left,
       y: e.changedTouches[0].clientY - boundingRect.top
     };
-    startCoord = { x: e.changedTouches[0].clientX, y: e.changedTouches[0].clientY };
     move({ x: e.changedTouches[0].pageX, y: e.changedTouches[0].pageY });
     document.addEventListener("touchmove", handleMove);
     document.addEventListener("touchcancel", dragRelease);
@@ -52,6 +56,22 @@ const dragRelease = (e: MouseEvent | TouchEvent) => {
   const coord = getCoord(e);
   const target = getSquareUnderCoord(coord);
 
+  gameStore.setHoveredTile("");
+  if (
+    target &&
+    target.id in gameStore.board &&
+    gameStore.board[target.id].state === TileState.Active &&
+    gameStore.board[target.id].val === props.val
+  ) {
+    const boundingRect = target?.getBoundingClientRect();
+    move({ x: boundingRect?.left, y: boundingRect?.top }, false);
+    gameStore.removeFromHand(props.id);
+    gameStore.setTileState(target.id, TileState.Complete);
+    gameStore.activateAdjacentTiles(target.id, settingsStore.range);
+  } else {
+    move();
+  }
+
   if (isMouse) {
     document.removeEventListener("mousemove", handleMove);
     document.removeEventListener("mouseup", dragRelease);
@@ -60,29 +80,12 @@ const dragRelease = (e: MouseEvent | TouchEvent) => {
     document.removeEventListener("touchcancel", dragRelease);
     document.removeEventListener("touchend", dragRelease);
   }
-
-  if (
-    target &&
-    target.id in gameStore.board &&
-    gameStore.board[target.id].state === TileState.Active &&
-    gameStore.board[target.id].val === props.val
-  ) {
-    const boundingRect = target?.getBoundingClientRect();
-    if (card.value) {
-      card.value.style.left = `${boundingRect?.left}px`;
-      card.value.style.top = `${boundingRect?.top}px`;
-    }
-    gameStore.removeFromHand(props.id);
-    gameStore.setTileState(target.id, TileState.Complete);
-  } else {
-    move(startCoord);
-  }
 };
 
-const move = (coord: Coord) => {
+const move = (coord?: Coord, shift: boolean = true) => {
   if (card.value) {
-    card.value.style.left = `${coord.x - shiftOffset.x}px`;
-    card.value.style.top = `${coord.y - shiftOffset.y}px`;
+    card.value.style.left = coord ? `${coord.x - (shift ? shiftOffset.x : 0)}px` : "";
+    card.value.style.top = coord ? `${coord.y - (shift ? shiftOffset.y : 0)}px` : "";
   }
 };
 
@@ -109,20 +112,19 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
   if (
     target &&
     target.id in gameStore.board &&
-    gameStore.board[target.id].state === TileState.Active &&
-    gameStore.board[target.id].val === props.val
+    gameStore.board[target.id].state === TileState.Active
   ) {
     gameStore.setHoveredTile(target.id);
   } else {
     gameStore.setHoveredTile("");
   }
-  move(getCoord(e));
+  move(coord);
 };
 </script>
 
 <style module>
 .card {
-  cursor: move;
+  cursor: pointer;
   position: absolute;
   width: 50px;
   height: 50px;
