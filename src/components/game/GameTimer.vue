@@ -22,7 +22,7 @@ const stopTimer = () => {
   clearInterval(intervalId);
 };
 
-const zeroPrefix = (val: number, digits: number) => ("000000000" + val).substring(10 - digits);
+const zeroPrefix = (val: number, digits: number) => ("000000000" + val).slice(-digits);
 
 const formatTime = (time: Date) => {
   return `${zeroPrefix(time.getUTCMinutes(), 2)}:${zeroPrefix(time.getUTCSeconds(), 2)}.${zeroPrefix(Math.floor(time.getUTCMilliseconds() / 10), 2)}`;
@@ -41,9 +41,8 @@ onBeforeUnmount(() => clearInterval(intervalId));
 
 <style module>
 .container {
-  align-self: start;
   font-size: 2rem;
   width: 10rem;
-  margin: 0.5rem;
+  margin: auto;
 }
 </style>
