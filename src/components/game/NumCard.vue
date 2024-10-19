@@ -6,7 +6,7 @@
       @mousedown.prevent="dragStart"
       @touchstart.prevent="dragStart"
     >
-      {{ val }}
+      {{ props.val }}
     </div>
   </div>
 </template>

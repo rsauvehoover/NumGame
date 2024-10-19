@@ -12,7 +12,7 @@
 </template>
 
 <script setup lang="ts">
-import { watch } from "vue";
+import { watchEffect } from "vue";
 import { ModalsContainer } from "vue-final-modal";
 import { storeToRefs } from "pinia";
 import { useSettingsStore, Mode } from "@/stores/settings";
@@ -27,29 +27,23 @@ const settingsStore = useSettingsStore();
 const { activeTiles } = storeToRefs(gameStore);
 const { timerActive, dyslexicFontActive, range, numStartingTiles } = storeToRefs(settingsStore);
 
-watch(
-  range,
-  () => {
-    gameStore.initializeBoard(range.value, numStartingTiles.value);
-  },
-  { immediate: true }
-);
+watchEffect(() => {
+  gameStore.initializeBoard(range.value, numStartingTiles.value);
+});
 
-watch(
-  activeTiles,
-  () => {
-    if (activeTiles.value.length === 0) {
-      // Handle win here
-      alert("your did it");
-      gameStore.stopTimer();
-    }
-  },
-  { immediate: true }
-);
+watchEffect(() => {
+  if (activeTiles.value.length === 0) {
+    // Handle win here
+    console.log("your did it");
+    gameStore.stopTimer();
+  }
+});
 
 const tmp = () => {
+  gameStore.stopTimer();
   gameStore.startTimer();
   gameStore.initializeBoard(range.value, numStartingTiles.value);
+  gameStore.generateHand(range.value);
 };
 
 window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", (event) => {

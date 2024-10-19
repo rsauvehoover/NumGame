@@ -59,6 +59,8 @@ export const useGameStore = defineStore({
       if (col < range.max) setActive(`${row},${col + 1}`, TileState.Active);
     },
     initializeBoard(range: Range, numActive: number) {
+      this.board = {};
+
       const coords = [];
       for (let row = range.min; row <= range.max; row++) {
         for (let col = range.min; col <= range.max; col++) {
@@ -75,7 +77,6 @@ export const useGameStore = defineStore({
         [coords[idx], coords[randIdx]] = [coords[randIdx], coords[idx]];
       }
 
-      this.board = {};
       for (let row = range.min; row <= range.max; row++) {
         for (let col = range.min; col <= range.max; col++) {
           this.board[`${row},${col}`] = {
@@ -91,7 +92,6 @@ export const useGameStore = defineStore({
       for (const item of coords.slice(0, numActive)) {
         this.setTileState(item, TileState.Active);
       }
-      this.generateHand(range);
     },
     getRandomActiveTile(): [string, Tile] | null {
       return this.activeTiles.length
@@ -105,7 +105,7 @@ export const useGameStore = defineStore({
       this.hand = {};
       // always generate one card that matches an active tile as bad luck mitigation
       const matchIdx = randIntFromRange(range.min, range.max);
-      for (let idx = range.min; idx < range.max; idx++) {
+      for (let idx = range.min; idx < Math.max(range.max, range.min + 1); idx++) {
         const handValue =
           randIntFromRange(range.min, range.max) * randIntFromRange(range.min, range.max);
         if (idx === matchIdx) {

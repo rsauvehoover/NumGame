@@ -72,6 +72,12 @@ export const useSettingsStore = defineStore({
     setRange(range: Range) {
       this.updateSettings({ range });
     },
+    setRangeMin(min: number) {
+      this.updateSettings({ range: { min, max: this.settings.range.max } });
+    },
+    setRangeMax(max: number) {
+      this.updateSettings({ range: { min: this.settings.range.min, max } });
+    },
     setNumStartingTiles(numStartingTiles: number) {
       this.updateSettings({ numStartingTiles });
     },

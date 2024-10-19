@@ -1,15 +1,14 @@
 <template>
-  <VueFinalModal
-    class="modal"
-    content-class="modal-content"
-    overlay-transition="vfm-fade"
-    content-transition="vfm-fade"
-  >
+  <VueFinalModal class="modal" content-class="modal-content" overlay-transition="vfm-fade"
+    content-transition="vfm-fade">
     <div :class="{ [$style.dyslexicFont]: dyslexicFont }">
       <div :class="$style.titleContainer">{{ $t("settings.title") }}</div>
-      <div>Min {{ range.min }}</div>
-      <div>Max {{ range.max }}</div>
-      <div>Starting Tiles {{ numStartingTiles }}</div>
+      <div>Min <input type="number" min="1" :max="rangeMax" v-model.number="rangeMin" /></div>
+      <div>Max <input type="number" :min="rangeMin" max="12" v-model.number="rangeMax" /></div>
+      <div style="display: flex">
+        Starting Tiles {{ numStartingTiles }}
+        <input type="range" v-model.number="numStartingTiles" name="min" :min="1" max="10" />
+      </div>
       <div style="display: flex">
         {{ $t("settings.fontToggle")
         }}<input :class="$style.toggle" type="checkbox" v-model="dyslexicFont" />
@@ -20,17 +19,26 @@
 
 <script setup lang="ts">
 import { VueFinalModal } from "vue-final-modal";
-import { useSettingsStore, type Range } from "@/stores/settings";
+import { useSettingsStore } from "@/stores/settings";
 import { computed } from "vue";
 
 const settingsStore = useSettingsStore();
 
-const range = computed({
+const rangeMin = computed({
   get() {
-    return settingsStore.range;
+    return settingsStore.range.min;
   },
-  set(val: Range) {
-    settingsStore.setRange(val);
+  set(val: number) {
+    settingsStore.setRangeMin(val);
+  }
+});
+
+const rangeMax = computed({
+  get() {
+    return settingsStore.range.max;
+  },
+  set(val: number) {
+    settingsStore.setRangeMax(val);
   }
 });
 
@@ -70,7 +78,7 @@ const dyslexicFont = computed({
   border: 0.1rem solid var(--color-border);
 }
 
-.modal-content > * + * {
+.modal-content>*+* {
   margin: 0.5rem 0;
 }
 
