@@ -5,6 +5,7 @@ import { createApp } from "vue";
 import { createPinia } from "pinia";
 import { createI18n } from "vue-i18n";
 import { createVfm } from "vue-final-modal";
+import VueNumberInput from "@chenfengyuan/vue-number-input";
 import App from "@/App.vue";
 
 import enUS from "@/locales/en-US.json";
@@ -21,6 +22,7 @@ const vfm = createVfm();
 
 const app = createApp(App);
 
+app.component(VueNumberInput.name as string, VueNumberInput);
 app.use(i18n);
 app.use(vfm);
 app.use(createPinia());

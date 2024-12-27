@@ -3,19 +3,24 @@
     content-transition="vfm-fade">
     <div :class="{ [$style.dyslexicFont]: dyslexicFont }">
       <div :class="$style.titleContainer">{{ $t("settings.title") }}</div>
-      <div>Min <input type="number" min="1" :max="rangeMax" v-model.number="rangeMin" /></div>
-      <div>
-        Max
-        <input type="number" :min="rangeMin" :max="Math.min(rangeMin + MAX_DIFF, OVERALL_MAX)"
+      <div style="display: flex">
+        {{ $t("settings.rangeMin") }}
+        <vue-number-input controls center size="small" :class="$style.input" :min="1" :max="rangeMax"
+          v-model.number="rangeMin" />
+      </div>
+      <div style="display: flex">
+        {{ $t("settings.rangeMax") }}
+        <vue-number-input controls center size="small" :class="$style.input" :min="rangeMin" :max="OVERALL_MAX"
           v-model.number="rangeMax" />
       </div>
       <div style="display: flex">
-        Starting Tiles {{ numStartingTiles }}
-        <input type="range" v-model.number="numStartingTiles" name="min" :min="1" max="10" />
+        {{ $t("settings.startingTiles") }}
+        <vue-number-input controls center size="small" :class="$style.input" :min="1" :max="10"
+          v-model.number="numStartingTiles" />
       </div>
       <div style="display: flex">
-        {{ $t("settings.fontToggle")
-        }}<input :class="$style.toggle" type="checkbox" v-model="dyslexicFont" />
+        {{ $t("settings.fontToggle") }}
+        <input :class="$style.input" type="checkbox" v-model="dyslexicFont" />
       </div>
     </div>
   </VueFinalModal>
@@ -27,7 +32,6 @@ import { useSettingsStore } from "@/stores/settings";
 import { computed } from "vue";
 
 const OVERALL_MAX = 30;
-const MAX_DIFF = 12;
 
 const settingsStore = useSettingsStore();
 
@@ -103,7 +107,7 @@ const dyslexicFont = computed({
   font-size: 2rem;
 }
 
-.toggle {
+.input {
   margin-left: auto;
 }
 

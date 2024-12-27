@@ -3,6 +3,9 @@
   "settings": {
     "title": "Settings",
     "close": "Close",
-    "fontToggle": "Dyslexia friendly font"
+    "fontToggle": "Dyslexia friendly font",
+    "rangeMin": "Minimum Operand",
+    "rangeMax": "Maximum Operand",
+    "startingTiles": "Starting Tiles"
   }
 }
