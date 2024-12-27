@@ -1,9 +1,13 @@
 <template>
-  <div :class="{
-    [$style.square]: true,
-    [$style.hovered]: props.hovered,
-    [$style.inactive]: props.state === TileState.Inactive
-  }" ref="root">
+  <div
+    :class="{
+      [$style.square]: true,
+      [$style.hovered]: props.hovered,
+      [$style.inactive]: props.state === TileState.Inactive,
+      [$style.complete]: props.state === TileState.Complete
+    }"
+    ref="root"
+  >
     {{ props.state === TileState.Complete ? props.val : "" }}
   </div>
 </template>
@@ -17,12 +21,16 @@ const props = defineProps<Tile>();
 .square {
   width: 50px;
   height: 50px;
-  border: 1px solid red;
+  border: 1px solid var(--color-border);
   background: var(--color-active-square);
 }
 
 .inactive {
   background: var(--color-default-square);
+}
+
+.complete {
+  background: green;
 }
 
 .hovered {

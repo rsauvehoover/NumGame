@@ -129,6 +129,7 @@ const handleMove = (e: MouseEvent | TouchEvent) => {
   width: 50px;
   height: 50px;
   border: 3px solid yellow;
+  background: var(--color-active-square);
 }
 
 .origin {
