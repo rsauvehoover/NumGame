@@ -4,7 +4,11 @@
     <div :class="{ [$style.dyslexicFont]: dyslexicFont }">
       <div :class="$style.titleContainer">{{ $t("settings.title") }}</div>
       <div>Min <input type="number" min="1" :max="rangeMax" v-model.number="rangeMin" /></div>
-      <div>Max <input type="number" :min="rangeMin" max="12" v-model.number="rangeMax" /></div>
+      <div>
+        Max
+        <input type="number" :min="rangeMin" :max="Math.min(rangeMin + MAX_DIFF, OVERALL_MAX)"
+          v-model.number="rangeMax" />
+      </div>
       <div style="display: flex">
         Starting Tiles {{ numStartingTiles }}
         <input type="range" v-model.number="numStartingTiles" name="min" :min="1" max="10" />
@@ -21,6 +25,9 @@
 import { VueFinalModal } from "vue-final-modal";
 import { useSettingsStore } from "@/stores/settings";
 import { computed } from "vue";
+
+const OVERALL_MAX = 30;
+const MAX_DIFF = 12;
 
 const settingsStore = useSettingsStore();
 
