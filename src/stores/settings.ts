@@ -20,6 +20,7 @@ export enum Language {
 export interface Settings {
   range: Range;
   scale: number;
+  numOperands: number;
   numStartingTiles: number;
   language: Language;
   mode: Mode;
@@ -32,6 +33,7 @@ const getDefaultSettings = (): Settings => ({
     min: 5,
     max: 10
   },
+  numOperands: 6,
   scale: 1,
   numStartingTiles: 3,
   timer: false,
@@ -73,10 +75,15 @@ export const useSettingsStore = defineStore({
       this.updateSettings({ range });
     },
     setRangeMin(min: number) {
-      this.updateSettings({ range: { min, max: this.settings.range.max } });
+      this.updateSettings({
+        range: { min, max: min + this.settings.numOperands - 1 }
+      });
     },
-    setRangeMax(max: number) {
-      this.updateSettings({ range: { min: this.settings.range.min, max } });
+    setNumOperands(val: number) {
+      this.updateSettings({
+        range: { min: this.settings.range.min, max: this.settings.range.min + val - 1 },
+        numOperands: val
+      });
     },
     setNumStartingTiles(numStartingTiles: number) {
       this.updateSettings({ numStartingTiles });
@@ -108,6 +115,9 @@ export const useSettingsStore = defineStore({
     },
     numStartingTiles(): number {
       return this.settings.numStartingTiles;
+    },
+    numOperands(): number {
+      return this.settings.numOperands;
     },
     mode(): Mode {
       return this.settings.mode;

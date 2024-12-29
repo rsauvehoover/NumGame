@@ -5,13 +5,13 @@
       <div :class="$style.titleContainer">{{ $t("settings.title") }}</div>
       <div style="display: flex">
         {{ $t("settings.rangeMin") }}
-        <vue-number-input controls center size="small" :class="$style.input" :min="1" :max="rangeMax"
+        <vue-number-input controls center size="small" :class="$style.input" :min="1" :max="RANGE_MAX"
           v-model.number="rangeMin" />
       </div>
       <div style="display: flex">
-        {{ $t("settings.rangeMax") }}
-        <vue-number-input controls center size="small" :class="$style.input" :min="rangeMin" :max="OVERALL_MAX"
-          v-model.number="rangeMax" />
+        {{ $t("settings.numOperands") }}
+        <vue-number-input controls center size="small" :class="$style.input" :min="1" :max="MAX_OPERANDS"
+          v-model.number="numOperands" />
       </div>
       <div style="display: flex">
         {{ $t("settings.startingTiles") }}
@@ -31,7 +31,8 @@ import { VueFinalModal } from "vue-final-modal";
 import { useSettingsStore } from "@/stores/settings";
 import { computed } from "vue";
 
-const OVERALL_MAX = 30;
+const RANGE_MAX = 24;
+const MAX_OPERANDS = 12;
 
 const settingsStore = useSettingsStore();
 
@@ -44,12 +45,12 @@ const rangeMin = computed({
   }
 });
 
-const rangeMax = computed({
+const numOperands = computed({
   get() {
-    return settingsStore.range.max;
+    return settingsStore.numOperands;
   },
   set(val: number) {
-    settingsStore.setRangeMax(val);
+    settingsStore.setNumOperands(val);
   }
 });
 

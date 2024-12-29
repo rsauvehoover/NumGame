@@ -5,7 +5,7 @@
     "close": "Close",
     "fontToggle": "Dyslexia friendly font",
     "rangeMin": "Minimum Operand",
-    "rangeMax": "Maximum Operand",
+    "numOperands": "Number of Operands",
     "startingTiles": "Starting Tiles"
   }
 }
